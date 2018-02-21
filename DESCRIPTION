@@ -1,0 +1,14 @@
+Package: inepdata
+Version: 0.1-1
+Date: 2018-02-21
+Title: Microdata from INEP
+Authors@R: person("Marcelo", "Ventura Freire", email = "mvf@usp.br", role = c("aut", "cre"))
+Author: Marcelo Ventura Freire
+Maintainer: Marcelo Ventura Freire <mvf@usp.br>
+Depends: R (>= 3.4.3),         # pacotes a serem carregados antes do inepdata
+Imports:                       # namespaces a serem acessados sem carregar os respectivos pacotes
+Description: Download, unpack, import, organize and format microdata made available by 
+    INEP (Brazilian Education Bureau) at <http://portal.inep.gov.br/microdados>.  
+    Currently, dealing with ENEM microdata only; as develpment goes, more microdata will be 
+    dealt with. 
+License: GPL (>= 3)
