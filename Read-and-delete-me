@@ -7,6 +7,8 @@
 
 Read "Writing R Extensions" for more information.
 
+* montar o pacote com `devtools::build()`
+* instalar o pacote com `devtools::install()`
 * gerar documentação com `devtools::document()`
 
 Depends:

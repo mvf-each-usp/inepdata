@@ -23,6 +23,7 @@
 #'
 #' - \code{data.frame} -- what you are really looking for; it will be here in case of full
 #'     success; it will be either one single data frame or a list of data frames
+#'
 #' - \code{last.successfull.step} -- a string; either "download", "unpack", "import",
 #'     "organize" or "format"
 #'
