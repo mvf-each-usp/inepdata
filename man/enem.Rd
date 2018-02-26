@@ -4,15 +4,16 @@
 \alias{enem}
 \title{Gets Data from ENEM (Exame Nacional de Ensino Médio)}
 \usage{
-enem(years, link = NULL, temp.path = ".", keep.download = FALSE,
-  verbose = FALSE)
+enem(years, download.page.url = NULL, temp.path = ".",
+  keep.download = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{years}{years to get from INEP site; should be a vector of integers}
 
-\item{link}{external http link from where to download.  It is there just in case the
-package fails to fetch the correct URL from INEP's site -- which can occur when
-INEP alters its site structure, for instance.
+\item{download.page.url}{external http link from where to download.
+It is there just in case the package fails to fetch the correct URL
+from INEP's site -- which can occur when INEP alters its site structure,
+for instance.
 (Should you detect this kind of occurrence, please contact this package's author,
 just in case he haven't noticed that yet.)}
 
@@ -23,25 +24,35 @@ just in case he haven't noticed that yet.)}
 \item{verbose}{do you want know what is going on while this function works?}
 }
 \value{
-A list of lists, indexed by the years present in \code{years} that could be processed.
+A list of lists, indexed by the years present in \code{year} that could be processed.
 
 For each year in \code{years}, either one list is returned in case of success (total or
 partial) or \code{NULL} is returned in case of complete lack of success.
 
 In case of success, the item for each year will be a list containing the following
 fields:
+\itemize{
+\item \code{last.successful.step} -- a string; either "download", "unpack", "import", "organize" or "format"
+\item \code{download.url} -- URL used to download the packed file
+\item \code{data.frame} -- what you are really looking for; it will be here in case of full
+success; it will be either one single data frame or a list of data frames
+}
 
-- \code{data.frame} -- what you are really looking for; it will be here in case of full
-    success; it will be either one single data frame or a list of data frames
-- \code{last.successfull.step} -- a string; either "download", "unpack", "import",
-    "organize" or "format"
-
-Case \code{keep.download == TRUE},
-
-- \code{downloaded.file} path and name of the downloaded packed file
+There might be one or more of the following additional fields in the following
+conditions:
+\itemize{
+\item If \code{keep.download == TRUE} or if \code{last.successful.step == download},
+\itemize{
+\item \code{downloaded.file} path and name of the downloaded packed file
+}
+}
 }
 \description{
 Downloads, unpacks, imports, organizes and formats microdata from ENEM editions
+}
+\details{
+\code{enem()} will scrape the adequate file in
+\href{http://portal.inep.gov.br/web/guest/microdados}{INEP's microdata page}.
 }
 \examples{
 # getting data from years 2014 to 2016
