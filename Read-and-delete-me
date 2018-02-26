@@ -7,9 +7,10 @@
 
 Read "Writing R Extensions" for more information.
 
-* montar o pacote com `devtools::build()`
-* instalar o pacote com `devtools::install()`
-* gerar documentação com `devtools::document()`
+Para montar o pacote:
+1. gerar documentação com `devtools::document()`
+2. montar o pacote com `devtools::build()`
+3. instalar o pacote com `devtools::install()`
 
 Depends:
 # - pacotes a serem carregados antes do inepdata e cujos objetos devem estar disponíveis para o usuário usar
