@@ -33,9 +33,9 @@ In case of success, the item for each year will be a list containing the followi
 fields:
 \itemize{
 \item \code{last.successful.step} -- a string; either "download", "unpack", "import", "organize" or "format"
-\item \code{download.url} -- URL used to download the packed file
+\item \code{download.url} -- URL used to download the packed archive
 \item \code{data.frame} -- what you are really looking for; it will be here in case of full
-success; it will be either one single data frame or a list of data frames
+success; it will be either one single data frame or a list of data frames or \code{NULL}
 }
 
 There might be one or more of the following additional fields in the following
@@ -43,7 +43,15 @@ conditions:
 \itemize{
 \item If \code{keep.download == TRUE} or if \code{last.successful.step == download},
 \itemize{
-\item \code{downloaded.file} path and name of the downloaded packed file
+\item \code{downloaded.file} -- path and name of the downloaded packed file
+}
+\item If \code{last.successful.step == unpack},
+\itemize{
+\item \code{unpacked.files} -- path of the directory where the archive was unpacked
+}
+\item If \code{last.successful.step == import},
+\itemize{
+\item \code{raw.data.frames} -- it will be either one single data frame or a list of data frames
 }
 }
 }
@@ -51,7 +59,7 @@ conditions:
 Downloads, unpacks, imports, organizes and formats microdata from ENEM editions
 }
 \details{
-\code{enem()} will scrape the adequate file in
+\code{enem()} will scrape the adequate files in
 \href{http://portal.inep.gov.br/web/guest/microdados}{INEP's microdata page}.
 }
 \examples{
