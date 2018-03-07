@@ -2,7 +2,10 @@
 #'
 #' Downloads, unpacks, imports, organizes and formats microdata from ENEM editions
 #'
-#' @param years years to get from INEP site; should be a vector of integers
+#' @param years years to get from INEP site or from the directory informed in `zip.files.path` below;
+#'     it should be a vector of either integers or strings
+#' @param zip.files.path path to directory where the downloaded zip files are located;
+#'     if `zip.files.path` is provided, no download will be attempted
 #' @param download.page.url external http link from where to download.
 #'     It is there just in case the package fails to fetch the correct URL
 #'     from INEP's site -- which can occur when INEP alters its site structure,
@@ -46,7 +49,26 @@
 #' @export
 #' @md
 #'
-enem <-
-    function(years, download.page.url = NULL, temp.path = ".", keep.download = FALSE, verbose = FALSE){
-
+enem <- function(years, zip.files.path, download.page.url = NULL, temp.path = "./tmp",
+                 keep.download = FALSE, verbose = FALSE){
+    if (missing(years))
+        stop("You need to provide at least one year")
+    years <- as.numeric(years)
+    if (missing(zip.files.path)) { # need to download all files
+        if (!are.urls.ok(download.page.url))
+            stop("Could not fetch URLs to ZIP files. Try informing a valid URL")
+        if (!curl::has_internet())
+            stop("Will need to download files, but no internet connection has been found")
+        # TODO: download files here
+        # TODO: set up `temp.path`
+    } else {  # files downloaded already; no longer need to download
+        if (!is.path.ok(zip.files.path)) {
+            stop("No ZIP files found at the path provided in 'zip.files.path'")
+        }
+        # TODO: set up `temp.path`
     }
+    # TODO: unpack ZIP files %in% `years`
+    # TODO: import unpacked files %in% `years`
+    # TODO: organize imported data.frames
+    # TODO: format organized data.frames
+}
