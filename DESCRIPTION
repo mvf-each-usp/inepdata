@@ -11,5 +11,9 @@ Description: Download, unpack, import, organize and format microdata made availa
     dealt with. 
 License: GPL (>= 3)
 RoxygenNote: 6.0.1.9000
+Encoding: UTF-8
 Depends: R (>= 3.4.3)
-Imports: curl, httr
+Imports: 
+    RCurl,
+    magrittr,
+    tidyverse
