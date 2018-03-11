@@ -29,8 +29,8 @@ then set \code{download.page.url} to \code{NULL}.}
 It cannot be set "" and, if attempted, it is set to its default value "./temp".}
 
 \item{max.paralell.downloads}{number of maximum parallel downloads to be realized.
-Default is \code{Inf} and you can simply do \code{max.paralell.downloads = NULL} to set
-\code{max.paralell.downloads} back to it.}
+Default is the number of CPUs minus 1 and you can simply do
+\code{max.paralell.downloads = NULL} to set \code{max.paralell.downloads} back to it.}
 
 \item{keep.download}{whether to keep or purge the downloaded packed microdata files}
 

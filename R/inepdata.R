@@ -2,21 +2,6 @@
 ### internal machinery of inepdata package
 ####
 
-# default value for package parameters
-default.download.page.url <- "http://portal.inep.gov.br/web/guest/microdados"
-default.temp.path  <- "./temp"
-default.max.paralell.downloads <- Inf
-default.mean.wait <- 0.005 # time in seconds
-
-# package parameters
-zip.path <- ""
-download.page.url <- default.download.page.url
-temp.path  <- default.temp.path
-max.paralell.downloads <- default.max.paralell.downloads
-mean.wait <- default.mean.wait
-keep.download <- FALSE
-verbose <- FALSE
-
 # package working variables
 zip.files <- NULL
 programs.loaded <- FALSE

@@ -1,3 +1,18 @@
+# default value for package parameters
+default.download.page.url <- "http://portal.inep.gov.br/web/guest/microdados"
+default.temp.path  <- "./temp"
+default.max.paralell.downloads <- parallel::detectCores() - 1
+default.mean.wait <- 0.005 # time in seconds
+
+# package parameters
+zip.path <- ""
+download.page.url <- default.download.page.url
+temp.path  <- default.temp.path
+max.paralell.downloads <- default.max.paralell.downloads
+mean.wait <- default.mean.wait
+keep.download <- FALSE
+verbose <- FALSE
+
 #' Options for package `inepdata`
 #'
 #' @param ... these dots are here just to force parameters to be explicitly named
@@ -17,8 +32,8 @@
 #' @param temp.path where should the microdata ZIP files be downloaded and decompressed?
 #'     It cannot be set "" and, if attempted, it is set to its default value "./temp".
 #' @param max.paralell.downloads number of maximum parallel downloads to be realized.
-#'     Default is `Inf` and you can simply do `max.paralell.downloads = NULL` to set
-#'     `max.paralell.downloads` back to it.
+#'     Default is the number of CPUs minus 1 and you can simply do
+#'     `max.paralell.downloads = NULL` to set `max.paralell.downloads` back to it.
 #' @param keep.download whether to keep or purge the downloaded packed microdata files
 #' @param verbose do you want know what is going on under the hood while these functions
 #'      are running? (currently, not implemented)
