@@ -4,17 +4,6 @@
 #'
 #' @param years years to get from INEP site or from the directory informed in `zip.files.path` below;
 #'     it should be a vector of either integers or strings
-#' @param zip.files.path path to directory where the downloaded zip files are located;
-#'     if `zip.files.path` is provided, no download will be attempted
-#' @param download.page.url external http link from where to download.
-#'     It is there just in case the package fails to fetch the correct URL
-#'     from INEP's site -- which can occur when INEP alters its site structure,
-#'     for instance.
-#'     (Should you detect this kind of occurrence, please contact this package's author,
-#'     just in case he haven't noticed that yet.)
-#' @param temp.path where should the packed microdata file(s) be downloaded?
-#' @param keep.download whether to keep or purge the downloaded packed microdata files
-#' @param verbose do you want know what is going on while this function works?
 #'
 #' @return
 #' A list of lists, indexed by the years present in `year` that could be processed.
@@ -38,37 +27,19 @@
 #' - If `last.successful.step == import`,
 #'     - `raw.data.frames` -- it will be either one single data frame or a list of data frames
 #'
-#' @details
-#' `enem()` will scrape the adequate files in
-#'     [INEP's microdata page](http://portal.inep.gov.br/web/guest/microdados).
-#'
 #' @examples
 #' # getting data from years 2014 to 2016
 #' enem(2014:2016)
 #'
 #' @export
 #' @md
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%<>%"
 #'
-enem <- function(years, zip.files.path, download.page.url = NULL, temp.path = "./tmp",
-                 keep.download = FALSE, verbose = FALSE){
-    if (missing(years))
-        stop("You need to provide at least one year")
-    years <- as.numeric(years)
-    if (missing(zip.files.path)) { # need to download all files
-        if (!are.urls.ok(download.page.url))
-            stop("Could not fetch URLs to ZIP files. Try informing a valid URL")
-        if (!curl::has_internet())
-            stop("Will need to download files, but no internet connection has been found")
-        # TODO: download files here
-        # TODO: set up `temp.path`
-    } else {  # files downloaded already; no longer need to download
-        if (!is.path.ok(zip.files.path)) {
-            stop("No ZIP files found at the path provided in 'zip.files.path'")
-        }
-        # TODO: set up `temp.path`
-    }
-    # TODO: unpack ZIP files %in% `years`
-    # TODO: import unpacked files %in% `years`
+enem <- function(years){
+    fetch.archives("enem", years)
+    # TODO: extract ZIP files present in both `temp.path` and `years` each in a different subdir
+    # TODO: import unpacked files from each subdir of `temp.path`
     # TODO: organize imported data.frames
     # TODO: format organized data.frames
 }

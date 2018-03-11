@@ -4,24 +4,11 @@
 \alias{enem}
 \title{Gets Data from ENEM (Exame Nacional de Ensino Médio)}
 \usage{
-enem(years, download.page.url = NULL, temp.path = ".",
-  keep.download = FALSE, verbose = FALSE)
+enem(years)
 }
 \arguments{
-\item{years}{years to get from INEP site; should be a vector of integers}
-
-\item{download.page.url}{external http link from where to download.
-It is there just in case the package fails to fetch the correct URL
-from INEP's site -- which can occur when INEP alters its site structure,
-for instance.
-(Should you detect this kind of occurrence, please contact this package's author,
-just in case he haven't noticed that yet.)}
-
-\item{temp.path}{where should the packed microdata file(s) be downloaded?}
-
-\item{keep.download}{whether to keep or purge the downloaded packed microdata files}
-
-\item{verbose}{do you want know what is going on while this function works?}
+\item{years}{years to get from INEP site or from the directory informed in \code{zip.files.path} below;
+it should be a vector of either integers or strings}
 }
 \value{
 A list of lists, indexed by the years present in \code{year} that could be processed.
@@ -57,10 +44,6 @@ conditions:
 }
 \description{
 Downloads, unpacks, imports, organizes and formats microdata from ENEM editions
-}
-\details{
-\code{enem()} will scrape the adequate files in
-\href{http://portal.inep.gov.br/web/guest/microdados}{INEP's microdata page}.
 }
 \examples{
 # getting data from years 2014 to 2016
