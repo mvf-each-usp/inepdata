@@ -4,8 +4,7 @@
 \alias{options}
 \title{Options for package \code{inepdata}}
 \usage{
-options(..., zip.path, download.page.url, temp.path, max.paralell.downloads,
-  mean.wait, keep.download, verbose)
+options(..., zip.path, download.page.url, temp.path, keep.download, verbose)
 }
 \arguments{
 \item{...}{these dots are here just to force parameters to be explicitly named}
@@ -27,10 +26,6 @@ then set \code{download.page.url} to \code{NULL}.}
 
 \item{temp.path}{where should the microdata ZIP files be downloaded and decompressed?
 It cannot be set "" and, if attempted, it is set to its default value "./temp".}
-
-\item{max.paralell.downloads}{number of maximum parallel downloads to be realized.
-Default is the number of CPUs minus 1 and you can simply do
-\code{max.paralell.downloads = NULL} to set \code{max.paralell.downloads} back to it.}
 
 \item{keep.download}{whether to keep or purge the downloaded packed microdata files}
 

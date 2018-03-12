@@ -1,17 +1,19 @@
 # default value for package parameters
 default.download.page.url <- "http://portal.inep.gov.br/web/guest/microdados"
 default.temp.path  <- "./temp"
-default.max.paralell.downloads <- parallel::detectCores() - 1
-default.mean.wait <- 0.005 # time in seconds
 
 # package parameters
 zip.path <- ""
 download.page.url <- default.download.page.url
 temp.path  <- default.temp.path
-max.paralell.downloads <- default.max.paralell.downloads
-mean.wait <- default.mean.wait
 keep.download <- FALSE
 verbose <- FALSE
+
+# # maybe in version 2.0 I will introduce parallel processing, but not today
+# default.max.paralell.downloads <- parallel::detectCores() - 1
+# default.mean.wait <- 0.005 # time in seconds
+# max.paralell.downloads <- default.max.paralell.downloads
+# mean.wait <- default.mean.wait
 
 #' Options for package `inepdata`
 #'
@@ -29,11 +31,11 @@ verbose <- FALSE
 #'     If you do not want to seek any download page, then set `download.page.url` to "".
 #'     If you want `download.page.url` back to its default value,
 #'     then set `download.page.url` to `NULL`.
+# #' @param max.paralell.downloads number of maximum parallel downloads to be realized.
+# #'     Default is the number of CPUs minus 1 and you can simply do
+# #'     `max.paralell.downloads = NULL` to set `max.paralell.downloads` back to it.
 #' @param temp.path where should the microdata ZIP files be downloaded and decompressed?
 #'     It cannot be set "" and, if attempted, it is set to its default value "./temp".
-#' @param max.paralell.downloads number of maximum parallel downloads to be realized.
-#'     Default is the number of CPUs minus 1 and you can simply do
-#'     `max.paralell.downloads = NULL` to set `max.paralell.downloads` back to it.
 #' @param keep.download whether to keep or purge the downloaded packed microdata files
 #' @param verbose do you want know what is going on under the hood while these functions
 #'      are running? (currently, not implemented)
@@ -51,8 +53,9 @@ verbose <- FALSE
 #' options(temp.path = "/tmp/")     # Unix example
 #' options(keep.download = TRUE, temp.path = "./store.zip.files.here/")
 #'
-options <- function(..., zip.path, download.page.url, temp.path, max.paralell.downloads,
-                    mean.wait, keep.download, verbose) {
+options <- function(..., zip.path, download.page.url, temp.path,
+                    # max.paralell.downloads, mean.wait,
+                    keep.download, verbose) {
     if (!missing(zip.path)) {
         if (!is.character(zip.path))
             stop("Parameter `zip.path` must be character.")
@@ -134,32 +137,32 @@ options <- function(..., zip.path, download.page.url, temp.path, max.paralell.do
             warning("Parameter `` cannot be \"\". Coerced to \"./temp\".")
         }
     }
-    if (!missing(max.paralell.downloads)){
-        if (is.null(max.paralell.downloads)) {
-            inepdata:::max.paralell.downloads <- inepdata:::default.max.paralell.downloads
-        } else {
-            if (!is.integer(max.paralell.downloads))
-                stop("Parameter `max.paralell.downloads` must be integer.")
-            if (length(max.paralell.downloads) > 1)
-                stop("Length of parameter `max.paralell.downloads` must be 1.")
-            if (max.paralell.downloads < 1)
-                stop("Parameter `max.paralell.downloads` must be at least 1.")
-            inepdata:::max.paralell.downloads <- max.paralell.downloads
-        }
-    }
-    if (!missing(mean.wait)){
-        if (is.null(mean.wait)) {
-            inepdata:::mean.wait <- inepdata:::default.mean.wait
-        } else {
-            if (!is.numeric(mean.wait))
-                stop("Parameter `mean.wait` must be numeric.")
-            if (length(mean.wait) > 1)
-                stop("Length of parameter `mean.wait` must be 1.")
-            if (mean.wait <= 0)
-                stop("Parameter `mean.wait` must be positive.")
-            inepdata:::mean.wait <- mean.wait
-        }
-    }
+    # if (!missing(max.paralell.downloads)){
+    #     if (is.null(max.paralell.downloads)) {
+    #         inepdata:::max.paralell.downloads <- inepdata:::default.max.paralell.downloads
+    #     } else {
+    #         if (!is.integer(max.paralell.downloads))
+    #             stop("Parameter `max.paralell.downloads` must be integer.")
+    #         if (length(max.paralell.downloads) > 1)
+    #             stop("Length of parameter `max.paralell.downloads` must be 1.")
+    #         if (max.paralell.downloads < 1)
+    #             stop("Parameter `max.paralell.downloads` must be at least 1.")
+    #         inepdata:::max.paralell.downloads <- max.paralell.downloads
+    #     }
+    # }
+    # if (!missing(mean.wait)){
+    #     if (is.null(mean.wait)) {
+    #         inepdata:::mean.wait <- inepdata:::default.mean.wait
+    #     } else {
+    #         if (!is.numeric(mean.wait))
+    #             stop("Parameter `mean.wait` must be numeric.")
+    #         if (length(mean.wait) > 1)
+    #             stop("Length of parameter `mean.wait` must be 1.")
+    #         if (mean.wait <= 0)
+    #             stop("Parameter `mean.wait` must be positive.")
+    #         inepdata:::mean.wait <- mean.wait
+    #     }
+    # }
     if (!missing(keep.download)){
         if (!is.logical(keep.download))
             stop("Parameter `keep.download` must be logical.")
