@@ -1,19 +1,22 @@
+# storing options for the package
+.options <- new.env(parent = emptyenv())
+
 # default value for package parameters
-default.download.page.url <- "http://portal.inep.gov.br/web/guest/microdados"
-default.temp.path  <- "./temp"
+.options$default.download.page.url <- "http://portal.inep.gov.br/web/guest/microdados"
+.options$default.temp.path  <- "./temp"
 
 # package parameters
-zip.path <- ""
-download.page.url <- default.download.page.url
-temp.path  <- default.temp.path
-keep.download <- FALSE
-verbose <- FALSE
+.options$zip.path <- ""
+.options$download.page.url <- .options$default.download.page.url
+.options$temp.path  <- .options$default.temp.path
+.options$keep.download <- FALSE
+.options$verbose <- FALSE
 
 # # maybe in version 2.0 I will introduce parallel processing, but not today
-# default.max.paralell.downloads <- parallel::detectCores() - 1
-# default.mean.wait <- 0.005 # time in seconds
-# max.paralell.downloads <- default.max.paralell.downloads
-# mean.wait <- default.mean.wait
+# .options$default.max.paralell.downloads <- parallel::detectCores() - 1
+# .options$default.mean.wait <- 0.005 # time in seconds
+# .options$max.paralell.downloads <- .options$default.max.paralell.downloads
+# .options$mean.wait <- .options$default.mean.wait
 
 #' Options for package `inepdata`
 #'
@@ -53,7 +56,7 @@ verbose <- FALSE
 #' options(temp.path = "/tmp/")     # Unix example
 #' options(keep.download = TRUE, temp.path = "./store.zip.files.here/")
 #'
-options <- function(..., zip.path, download.page.url, temp.path,
+Options <- function(..., zip.path, download.page.url, temp.path,
                     # max.paralell.downloads, mean.wait,
                     keep.download, verbose) {
     if (!missing(zip.path)) {
@@ -71,15 +74,15 @@ options <- function(..., zip.path, download.page.url, temp.path,
         } else {
             zip.path.null <- TRUE
         }
-        inepdata:::zip.path <- zip.path
+        .options$zip.path <- zip.path
     }
     if (!missing(download.page.url)) {
         if (is.null(download.page.url)) {
-            inepdata:::download.page.url <- inepdata:::default.download.page.url
+            .options$download.page.url <- .options$default.download.page.url
             check.internet()
-            if(!is.url.valid(inepdata:::default.download.page.url))
+            if(!is.url.valid(.options$default.download.page.url))
                 stop("The original INEP microdata download page URL <",
-                     inepdata:::default.download.page.url,
+                     .options$default.download.page.url,
                      "> is not working.",
                      "\n\n",
                      "The URL may have actually changed, ",
@@ -116,7 +119,7 @@ options <- function(..., zip.path, download.page.url, temp.path,
             } else {
                 download.page.url.null <- TRUE
             }
-            inepdata:::download.page.url <- download.page.url
+            .options$download.page.url <- download.page.url
         }
     }
     if (zip.path.null && download.page.url.null)
@@ -132,14 +135,14 @@ options <- function(..., zip.path, download.page.url, temp.path,
             temp.path <- normalizePath(temp.path)
             if (!dir.exists(temp.path))
                 dir.create(temp.path)
-            inepdata:::temp.path <- temp.path
+            .options$temp.path <- temp.path
         } else {
             warning("Parameter `` cannot be \"\". Coerced to \"./temp\".")
         }
     }
     # if (!missing(max.paralell.downloads)){
     #     if (is.null(max.paralell.downloads)) {
-    #         inepdata:::max.paralell.downloads <- inepdata:::default.max.paralell.downloads
+    #         .options$max.paralell.downloads <- .options$default.max.paralell.downloads
     #     } else {
     #         if (!is.integer(max.paralell.downloads))
     #             stop("Parameter `max.paralell.downloads` must be integer.")
@@ -147,12 +150,12 @@ options <- function(..., zip.path, download.page.url, temp.path,
     #             stop("Length of parameter `max.paralell.downloads` must be 1.")
     #         if (max.paralell.downloads < 1)
     #             stop("Parameter `max.paralell.downloads` must be at least 1.")
-    #         inepdata:::max.paralell.downloads <- max.paralell.downloads
+    #         .options$max.paralell.downloads <- max.paralell.downloads
     #     }
     # }
     # if (!missing(mean.wait)){
     #     if (is.null(mean.wait)) {
-    #         inepdata:::mean.wait <- inepdata:::default.mean.wait
+    #         .options$mean.wait <- .options$default.mean.wait
     #     } else {
     #         if (!is.numeric(mean.wait))
     #             stop("Parameter `mean.wait` must be numeric.")
@@ -160,7 +163,7 @@ options <- function(..., zip.path, download.page.url, temp.path,
     #             stop("Length of parameter `mean.wait` must be 1.")
     #         if (mean.wait <= 0)
     #             stop("Parameter `mean.wait` must be positive.")
-    #         inepdata:::mean.wait <- mean.wait
+    #         .options$mean.wait <- mean.wait
     #     }
     # }
     if (!missing(keep.download)){
@@ -168,13 +171,13 @@ options <- function(..., zip.path, download.page.url, temp.path,
             stop("Parameter `keep.download` must be logical.")
         if (length(keep.download) > 1)
             stop("Length of parameter `keep.download` must be 1.")
-        inepdata:::keep.download <- keep.download
+        .options$keep.download <- keep.download
     }
     if (!missing(verbose)){
         if (!is.logical(verbose))
             stop("Parameter `verbose` must be logical.")
         if (length(verbose) > 1)
             stop("Length of parameter `verbose` must be 1.")
-        inepdata:::verbose <- verbose
+        .options$verbose <- verbose
     }
 }
