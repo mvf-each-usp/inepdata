@@ -1,13 +1,13 @@
-#' Fetches ZIP files for a specific program
-#'
-#' @param program any value in `available.programs$program`
-#' @param years any set of values in `available.programs$years[[program]]`
-#'
-#' @md
-#'
-#' @examples
-#' fetch.archives("enem", 2000)
-#' fetch.archives("enade", 2005:2008)
+# Fetches ZIP files for a specific program
+#
+# @param program any value in `available.programs$program`
+# @param years any set of values in `available.programs$years[[program]]`
+#
+# @md
+#
+# @examples
+# fetch.archives("enem", 2000)
+# fetch.archives("enade", 2005:2008)
 fetch.archives <- function(program, years){
     # assumption checking
     if (!program %in% available.programs$program)
