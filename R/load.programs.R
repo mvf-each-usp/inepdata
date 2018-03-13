@@ -1,3 +1,12 @@
+
+.data <- new.env(parent = emptyenv())
+
+# package working variables
+.data$zip.files <- NULL
+.data$programs.loaded <- FALSE
+
+
+
 #' Loads available programs
 #'
 #' Loads programs available in download page given by `download.page.url` and available
@@ -16,11 +25,11 @@ load.programs <- function() {
             stringsAsFactors = FALSE
         )
     # scrape ZIP links in INEP microdata page `download.page.url`
-    if (download.page.url != "") {
+    if (.options$download.page.url != "") {
         check.internet()
         remote.zip.files <-
             data.frame(
-                location = xml2::read_html(download.page.url) %>%
+                location = xml2::read_html(.options$download.page.url) %>%
                     rvest::html_nodes("a") %>%
                     rvest::html_attr("href") %>%
                     stringr::str_subset("\\.zip"),
@@ -31,10 +40,10 @@ load.programs <- function() {
         remote.zip.files <- null.zip.files
     }
     # search for ZIP files locally in `zip.path` if any
-    if (zip.path != ""){
+    if (.options$zip.path != ""){
         local.zip.files <-
             data.frame(
-                location = list.files(zip.path %+% "/*.zip"),
+                location = list.files(.options$zip.path %+% "/*.zip"),
                 is.url = FALSE,
                 stringsAsFactors = FALSE
             )
@@ -44,8 +53,7 @@ load.programs <- function() {
     # join both
     zip.files <- rbind(remote.zip.files, local.zip.files)
     if (nrow(zip.files) == 0)
-        # TODO HERE
-        stop("")
+        stop("Could not fetch ZIP files neither locally nor remotely.")
     # process both urls and local filenames
     zip.files %<>%
         dplyr::mutate(
@@ -71,12 +79,13 @@ load.programs <- function() {
                 stringr::str_replace(".*(ana).*", "ana") %>%
                 stringr::str_replace(".*(idd).*", "idd") %>%
                 factor(levels = levels(available.programs$program))
-        ) %>%
-        dplyr::group_by(program, year) %>%
-        # years with microdata already downloaded will show up here in the form of
-        #   duplicated lines: the first with `is.url == F` and the second with `is.url == T`
-        # TODO: test whether this muthafucka actually works or not
-        dplyr::filter(dplyr::row_number() == 1)
-    inepdata:::zip.files <- zip.files
-    inepdata:::programs.loaded <- TRUE
+        ) #%>%
+        # dplyr::group_by(program, year) %>%
+        # # years with microdata already downloaded will show up here in the form of
+        # #   duplicated lines: the first with `is.url == F` and the second with `is.url == T`
+        # # TODO: test whether this muthafucka actually works or not
+        # dplyr::filter(dplyr::row_number() == 1)
+        # TODO include back the above
+    .data$zip.files <- zip.files
+    .data$programs.loaded <- TRUE
 }

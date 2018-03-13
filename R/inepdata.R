@@ -1,11 +1,3 @@
-######
-### internal machinery of inepdata package
-####
-
-# package working variables
-zip.files <- NULL
-programs.loaded <- FALSE
-
 #####
 ## Auxiliary functions
 ###
