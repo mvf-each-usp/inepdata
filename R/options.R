@@ -59,6 +59,9 @@ default.temp.path  <- "./temp"
 Options <- function(..., zip.path, download.page.url, temp.path,
                     # max.paralell.downloads, mean.wait,
                     keep.download, verbose) {
+    zip.path.null <- FALSE
+    download.page.url.null <- FALSE
+    Verbose("parsing `zip.path`")
     if (!missing(zip.path)) {
         if (!is.character(zip.path))
             stop("Parameter `zip.path` must be character.")
@@ -70,12 +73,12 @@ Options <- function(..., zip.path, download.page.url, temp.path,
                 stop("Directory given in `zip.path` does not exist.")
             if (length(list.files(zip.path %+% "/*.zip")) == 0)
                 stop("No ZIP file found in directory given in `zip.path`.")
-            zip.path.null <- FALSE
         } else {
             zip.path.null <- TRUE
         }
         .options$zip.path <- zip.path
     }
+    Verbose("parsing `download.page.url`")
     if (!missing(download.page.url)) {
         if (is.null(download.page.url)) {
             .options$download.page.url <- default.download.page.url
@@ -115,7 +118,6 @@ Options <- function(..., zip.path, download.page.url, temp.path,
                     length() == 0
                 )
                     stop("No ZIP file links were found on URL given in `download.page.url`.")
-                download.page.url.null <- FALSE
             } else {
                 download.page.url.null <- TRUE
             }
@@ -124,8 +126,11 @@ Options <- function(..., zip.path, download.page.url, temp.path,
     }
     if (zip.path.null && download.page.url.null)
         stop("Parameters `zip.path` and `download.page.url` cannot be both \"\".")
-    if (missing(download.page.url) || missing(zip.path))
+    if (!missing(download.page.url) || !missing(zip.path)) {
+        Verbose("loading programs again")
         load.programs()
+    }
+    Verbose("parsing `temp.path`")
     if (!missing(temp.path)){
         if (!is.character(temp.path))
             stop("Parameter `temp.path` must be character.")
@@ -166,6 +171,7 @@ Options <- function(..., zip.path, download.page.url, temp.path,
     #         .options$mean.wait <- mean.wait
     #     }
     # }
+    Verbose("parsing `keep.download`")
     if (!missing(keep.download)){
         if (!is.logical(keep.download))
             stop("Parameter `keep.download` must be logical.")

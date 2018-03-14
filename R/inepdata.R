@@ -2,6 +2,14 @@
 ## Auxiliary functions
 ###
 
+# Prints verbose information
+#
+# @param ...
+#
+# @examples
+Verbose_ <- function(...) if (.options$verbose) cat(..., sep = "")
+Verbose  <- function(...) Verbose_(..., "\n")
+
 # Evaluates if an URL exists
 #
 # @param url URL to be verified
@@ -9,7 +17,9 @@
 # @return logical
 #
 is.url.valid <- function(url){
-    return(RCurl::url.exists(url))
+    valid <- RCurl::url.exists(url)
+    Verbose("is.url.valid == ", valid)
+    return(valid)
     # defining this basic function in only one place for quick replacement if needed
 }
 
@@ -18,7 +28,9 @@ is.url.valid <- function(url){
 # @return logical
 #
 is.internet.ok <- function() {
-    return(is.url.valid("https://www.google.com/")) # if google is down, the world has ended XD
+    ok <- is.url.valid("https://www.google.com/") # if google is down, then the world has ended XD
+    Verbose("is.internet.ok == ", ok)
+    return(ok)
 }
 
 # Checks whether internet is up or down

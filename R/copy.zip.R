@@ -3,6 +3,7 @@
 # @return
 #
 # @examples
-copy.zip <- function(){
+copy.zip <- function(...){
     # TODO
+    Verbose(...)
 }

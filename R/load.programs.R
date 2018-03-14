@@ -24,6 +24,7 @@ load.programs <- function() {
     # scrape ZIP links in INEP microdata page `download.page.url`
     if (.options$download.page.url != "") {
         check.internet()
+        Verbose("scraping ZIP links")
         remote.zip.files <-
             data.frame(
                 location = xml2::read_html(.options$download.page.url) %>%
@@ -38,6 +39,7 @@ load.programs <- function() {
     }
     # search for ZIP files locally in `zip.path` if any
     if (.options$zip.path != ""){
+        Verbose("looking for local ZIP files")
         local.zip.files <-
             data.frame(
                 location = list.files(.options$zip.path %+% "/*.zip"),
@@ -48,6 +50,7 @@ load.programs <- function() {
         local.zip.files <- null.zip.files
     }
     # join both
+    Verbose("joining remote ZIP links with local ZIP files")
     zip.files <- rbind(remote.zip.files, local.zip.files)
     if (nrow(zip.files) == 0)
         stop("Could not fetch ZIP files neither locally nor remotely.")
@@ -83,6 +86,7 @@ load.programs <- function() {
         # TODO: test whether this muthafucka actually works or not
         dplyr::filter(row_number() == 1) %>%
         dplyr::ungroup()
+    Verbose("programs loaded")
     .data$zip.files <- zip.files
     .data$programs.loaded <- TRUE
 }

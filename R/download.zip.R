@@ -3,6 +3,7 @@
 # @return
 #
 # @examples
-download.zip <- function(){
+download.zip <- function(...){
     # TODO
+    Verbose(...)
 }
