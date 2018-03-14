@@ -1,22 +1,22 @@
 # storing options for the package
-.options <- new.env(parent = emptyenv())
 
 # default value for package parameters
-.options$default.download.page.url <- "http://portal.inep.gov.br/web/guest/microdados"
-.options$default.temp.path  <- "./temp"
+default.download.page.url <- "http://portal.inep.gov.br/web/guest/microdados"
+default.temp.path  <- "./temp"
 
 # package parameters
+.options <- new.env(parent = emptyenv())
 .options$zip.path <- ""
-.options$download.page.url <- .options$default.download.page.url
-.options$temp.path  <- .options$default.temp.path
+.options$download.page.url <- default.download.page.url
+.options$temp.path  <- default.temp.path
 .options$keep.download <- FALSE
 .options$verbose <- FALSE
 
 # # maybe in version 2.0 I will introduce parallel processing, but not today
-# .options$default.max.paralell.downloads <- parallel::detectCores() - 1
-# .options$default.mean.wait <- 0.005 # time in seconds
-# .options$max.paralell.downloads <- .options$default.max.paralell.downloads
-# .options$mean.wait <- .options$default.mean.wait
+# default.max.paralell.downloads <- parallel::detectCores() - 1
+# default.mean.wait <- 0.005 # time in seconds
+# .options$max.paralell.downloads <- default.max.paralell.downloads
+# .options$mean.wait <- default.mean.wait
 
 #' Options for package `inepdata`
 #'
@@ -78,11 +78,11 @@ Options <- function(..., zip.path, download.page.url, temp.path,
     }
     if (!missing(download.page.url)) {
         if (is.null(download.page.url)) {
-            .options$download.page.url <- .options$default.download.page.url
+            .options$download.page.url <- default.download.page.url
             check.internet()
-            if(!is.url.valid(.options$default.download.page.url))
+            if(!is.url.valid(default.download.page.url))
                 stop("The original INEP microdata download page URL <",
-                     .options$default.download.page.url,
+                     default.download.page.url,
                      "> is not working.",
                      "\n\n",
                      "The URL may have actually changed, ",
@@ -142,7 +142,7 @@ Options <- function(..., zip.path, download.page.url, temp.path,
     }
     # if (!missing(max.paralell.downloads)){
     #     if (is.null(max.paralell.downloads)) {
-    #         .options$max.paralell.downloads <- .options$default.max.paralell.downloads
+    #         .options$max.paralell.downloads <- default.max.paralell.downloads
     #     } else {
     #         if (!is.integer(max.paralell.downloads))
     #             stop("Parameter `max.paralell.downloads` must be integer.")
@@ -155,7 +155,7 @@ Options <- function(..., zip.path, download.page.url, temp.path,
     # }
     # if (!missing(mean.wait)){
     #     if (is.null(mean.wait)) {
-    #         .options$mean.wait <- .options$default.mean.wait
+    #         .options$mean.wait <- default.mean.wait
     #     } else {
     #         if (!is.numeric(mean.wait))
     #             stop("Parameter `mean.wait` must be numeric.")
