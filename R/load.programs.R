@@ -1,11 +1,7 @@
-
-.data <- new.env(parent = emptyenv())
-
 # package working variables
+.data <- new.env(parent = emptyenv())
 .data$zip.files <- NULL
 .data$programs.loaded <- FALSE
-
-
 
 #' Loads available programs
 #'
@@ -16,6 +12,7 @@
 #' @md
 #' @importFrom magrittr "%>%"
 #' @importFrom magrittr "%<>%"
+#' @importFrom dplyr row_number
 #'
 load.programs <- function() {
     null.zip.files <-
@@ -79,13 +76,13 @@ load.programs <- function() {
                 stringr::str_replace(".*(ana).*", "ana") %>%
                 stringr::str_replace(".*(idd).*", "idd") %>%
                 factor(levels = levels(available.programs$program))
-        ) #%>%
-        # dplyr::group_by(program, year) %>%
-        # # years with microdata already downloaded will show up here in the form of
-        # #   duplicated lines: the first with `is.url == F` and the second with `is.url == T`
-        # # TODO: test whether this muthafucka actually works or not
-        # dplyr::filter(dplyr::row_number() == 1)
-        # TODO include back the above
+        ) %>%
+        dplyr::group_by(program, year) %>%
+        # years with microdata already downloaded will show up here in the form of
+        #   duplicated lines: the first with `is.url == F` and the second with `is.url == T`
+        # TODO: test whether this muthafucka actually works or not
+        dplyr::filter(row_number() == 1) %>%
+        dplyr::ungroup()
     .data$zip.files <- zip.files
     .data$programs.loaded <- TRUE
 }
