@@ -42,7 +42,7 @@ load.programs <- function() {
         Verbose("looking for local ZIP files")
         local.zip.files <-
             data.frame(
-                location = list.files(.options$zip.path %+% "/*.zip"),
+                location = list.files(path = .options$zip.path, pattern = "*.zip"),
                 is.url = FALSE,
                 stringsAsFactors = FALSE
             )

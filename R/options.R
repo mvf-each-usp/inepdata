@@ -71,7 +71,7 @@ Options <- function(..., zip.path, download.page.url, temp.path,
             zip.path <- normalizePath(zip.path)
             if (!dir.exists(zip.path))
                 stop("Directory given in `zip.path` does not exist.")
-            if (length(list.files(zip.path %+% "/*.zip")) == 0)
+            if (length(list.files(path = zip.path, pattern = "*.zip")) == 0)
                 stop("No ZIP file found in directory given in `zip.path`.")
         } else {
             zip.path.null <- TRUE
