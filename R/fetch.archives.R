@@ -21,22 +21,45 @@ fetch.archives <- function(Program, years){
     if (!.data$programs.loaded)
         load.programs()
     Verbose("filtering which program and years to fetch")
+    if (!dir.exists(.options$temp.path))
+        dir.create(.options$temp.path)
     program.2b.fetched <-
         .data$zip.files %>%
         dplyr::filter(program == Program) %>%
-        dplyr::filter(year %in% fetch.years)
+        dplyr::filter(year %in% fetch.years) %>%
+        dplyr::mutate(
+            filename = normalizePath(.options$temp.path) %+% "/" %+% filename %+% ".zip"
+        )
     if (program.2b.fetched %>% dplyr::filter(is.url) %>% dplyr::count() > 0) {
         Verbose("downloading ZIP files")
-        program.2b.fetched %>%
-        dplyr::filter(is.url) %>%
-        magrittr::extract("location") %>%
-        download.zip()
+        downloaded.files <-
+            program.2b.fetched %>%
+            dplyr::filter(is.url) %>%
+            dplyr::select(location, filename) %>%
+            dplyr::mutate(
+                # this is the actual downloading
+                error = download.file(url = location, destfile = filename)
+            )
     }
     if (program.2b.fetched %>% dplyr::filter(!is.url) %>% dplyr::count() > 0) {
         Verbose("copying local ZIP files")
-        program.2b.fetched %>%
-        dplyr::filter(!is.url) %>%
-        magrittr::extract("location") %>%
-        copy.zip()
+        copied.files <-
+            program.2b.fetched %>%
+            dplyr::filter(!is.url) %>%
+            dplyr::select(location, filename) %>%
+            dplyr::filter(location != filename) %>%
+            dplyr::mutate(error = file.copy(location, filename) %>% as.numeric())
     }
+    files.with.error <-
+        rbind(
+            downloaded.files,
+            copied.files
+        ) %>%
+        dplyr::filter(error != 0)
+    if (nrow(files.with.error) > 0)
+        warning(
+            "There was/were non-zero status(es) on download/copy of files\n",
+            capture.output(files.with.error)
+        )
+    return(files.with.error)
 }
