@@ -30,12 +30,14 @@ fetch.archives <- function(Program, years){
         dplyr::mutate(
             filename = normalizePath(.options$temp.path) %+% "/" %+% filename %+% ".zip"
         )
+    downloaded.files <- copied.files <-
+        program.2b.fetched[NULL, ] %>%
+        dplyr::mutate(error = as.numeric(NULL))
     if (program.2b.fetched %>% dplyr::filter(is.url) %>% dplyr::count() > 0) {
-        Verbose("downloading ZIP files")
+        Verbose("downloading ZIP files (each '=' equals 2%)")
         downloaded.files <-
             program.2b.fetched %>%
             dplyr::filter(is.url) %>%
-            dplyr::select(location, filename) %>%
             dplyr::mutate(
                 # this is the actual downloading
                 error = download.file(url = location, destfile = filename)
@@ -46,20 +48,15 @@ fetch.archives <- function(Program, years){
         copied.files <-
             program.2b.fetched %>%
             dplyr::filter(!is.url) %>%
-            dplyr::select(location, filename) %>%
             dplyr::filter(location != filename) %>%
             dplyr::mutate(error = file.copy(location, filename) %>% as.numeric())
     }
-    files.with.error <-
-        rbind(
-            downloaded.files,
-            copied.files
-        ) %>%
-        dplyr::filter(error != 0)
+    fetched <- rbind(downloaded.files, copied.files)
+    files.with.error <- fetched %>% dplyr::filter(error != 0)
     if (nrow(files.with.error) > 0)
         warning(
             "There was/were non-zero status(es) on download/copy of files\n",
             capture.output(files.with.error)
         )
-    return(files.with.error)
+    return(fetched)
 }

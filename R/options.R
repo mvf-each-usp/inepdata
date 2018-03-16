@@ -59,6 +59,14 @@ default.temp.path  <- "./temp"
 Options <- function(..., zip.path, download.page.url, temp.path,
                     # max.paralell.downloads, mean.wait,
                     keep.download, verbose) {
+    if (!identical(list(),list(...)))
+        stop("Could not handle option(s): ", paste0(names(list(...)), collapse = ", "))
+    if (
+        missing(zip.path) && missing(download.page.url) && missing(temp.path) &&
+        missing(keep.download) && missing(verbose)
+    ) {
+        return(as.list(.options))
+    }
     zip.path.null <- FALSE
     download.page.url.null <- FALSE
     Verbose("parsing `zip.path`")

@@ -26,13 +26,17 @@ load.programs <- function() {
         check.internet()
         Verbose("scraping ZIP links")
         remote.zip.files <-
-            data.frame(
+            dplyr::data_frame(
                 location = xml2::read_html(.options$download.page.url) %>%
                     rvest::html_nodes("a") %>%
                     rvest::html_attr("href") %>%
-                    stringr::str_subset("\\.zip"),
-                is.url = TRUE,
-                stringsAsFactors = FALSE
+                    stringr::str_subset("\\.zip") %>%
+                    stringr::str_replace(" .*", ""), # o 24o link tem um espaço em branco por engano
+                is.url = TRUE
+            ) %>%
+            dplyr::mutate(
+                size =
+                    sapply(location, function(loc) as.integer(httr::HEAD(loc)$headers$`content-length`))
             )
     } else {
         remote.zip.files <- null.zip.files
@@ -41,11 +45,13 @@ load.programs <- function() {
     if (.options$zip.path != ""){
         Verbose("looking for local ZIP files")
         local.zip.files <-
-            data.frame(
+            dplyr::data_frame(
                 location = list.files(path = .options$zip.path, pattern = "*.zip"),
-                is.url = FALSE,
-                stringsAsFactors = FALSE
-            )
+                is.url = FALSE
+            ) %>%
+            dplyr::mutate(
+                size = file.info(location)$size
+                )
     } else {
         local.zip.files <- null.zip.files
     }

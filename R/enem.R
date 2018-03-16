@@ -37,8 +37,16 @@
 #' @importFrom magrittr "%<>%"
 #'
 enem <- function(years){
-    fetch.archives("enem", years)
+    Verbose("Fetching enem ZIP files")
+    fetched <- fetch.archives("enem", years)
+    Verbose("Decompressing enem ZIP files")
+    decompress(fetched)
     # TODO: extract ZIP files present in both `temp.path` and `years` each in a different subdir
+    Verbose("Parsing importation syntax")
+    parse.syntax(fetched)
+    # TODO: parse SPSS or SAS syntax to get column types right
+    Verbose("Importing microdata")
+    import(fetched)
     # TODO: import unpacked files from each subdir of `temp.path`
     # TODO: organize imported data.frames
     # TODO: format organized data.frames
