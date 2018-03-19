@@ -38,11 +38,13 @@ load.programs <- function() {
             ) %>%
             dplyr::mutate(
                 size =
-                    sapply(location, function(loc) as.integer(httr::HEAD(loc)$headers$`content-length`))
+                    sapply(
+                        location,
+                        function(loc)
+                            as.integer(httr::HEAD(loc)$headers$`content-length`)
+                    )
             )
-    } else {
-        remote.zip.files <- null.zip.files
-    }
+    } else remote.zip.files <- null.zip.files
     # search for ZIP files locally in `zip.path` if any
     if (.options$zip.path != ""){
         Verbose("looking for local ZIP files")
@@ -51,12 +53,8 @@ load.programs <- function() {
                 location = list.files(path = .options$zip.path, pattern = "*.zip"),
                 is.url = FALSE
             ) %>%
-            dplyr::mutate(
-                size = file.info(location)$size
-                )
-    } else {
-        local.zip.files <- null.zip.files
-    }
+            dplyr::mutate(size = file.info(location)$size)
+    } else local.zip.files <- null.zip.files
     # join both
     Verbose("joining remote ZIP links with local ZIP files")
     zip.files <- rbind(remote.zip.files, local.zip.files)
