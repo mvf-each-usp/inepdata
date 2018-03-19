@@ -50,7 +50,10 @@ load.programs <- function() {
         Verbose("looking for local ZIP files")
         local.zip.files <-
             dplyr::data_frame(
-                location = list.files(path = .options$zip.path, pattern = "*.zip"),
+                location =
+                    .options$zip.path %+% "/" %+%
+                    list.files(path = .options$zip.path, pattern = "*.zip") %>%
+                    normalizePath(),
                 is.url = FALSE
             ) %>%
             dplyr::mutate(size = file.info(location)$size)
