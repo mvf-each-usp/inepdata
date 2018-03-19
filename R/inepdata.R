@@ -16,11 +16,12 @@ Verbose  <- function(...) Verbose_(..., "\n")
 #
 # @return logical
 #
+check.url.function <- RCurl::url.exists
+        # defining this basic function in only one place for quick replacement if needed
 is.url.valid <- function(url){
-    valid <- RCurl::url.exists(url)
+    valid <- ifelse(.options$offline, TRUE, check.url.function(url))
     Verbose("is.url.valid == ", valid)
     return(valid)
-    # defining this basic function in only one place for quick replacement if needed
 }
 
 # Verifies internet connection state

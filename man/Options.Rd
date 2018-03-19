@@ -4,34 +4,45 @@
 \alias{Options}
 \title{Options for package \code{inepdata}}
 \usage{
-Options(..., zip.path, download.page.url, temp.path, keep.download, verbose)
+Options(..., zip.path, offline, download.page.url, temp.path, keep.download,
+  verbose)
 }
 \arguments{
 \item{...}{these dots are here just to force parameters to be explicitly named}
 
-\item{zip.path}{path to directory where the downloaded zip files are located,
+\item{zip.path}{paths to directories where the downloaded zip files are located,
 so that those zip files will not be downloaded if available locally.
-\strong{Important}: the filenames must be equal to the corresponding file in INEP site.
 If you are not going to work with already downloaded ZIP files,
-then set \code{zip.path} to "".}
+then set \code{zip.path} to \code{NULL} or to \code{""}.\preformatted{**Important**: the filenames must be equal to the corresponding file in INEP site.
 
-\item{download.page.url}{external HTML page from which the ZIP URLs will be scraped.
+Default value: `""`
+}}
+
+\item{offline}{whether you want to work only with ZIP files already downloaded at \code{zip.path}
+or work scrape ZIP file links in INEP microdata download page at \code{download.page.url}.
+If \code{offline} is \code{TRUE}, then \code{zip.path} will need to be set to a value other than \code{""}\preformatted{Default value: `FALSE`
+}}
+
+\item{download.page.url}{external HTML page from which the ZIP URLs will be scraped if \code{offline} is false.
 It is there just in case the package fails to fetch the correct URL
 from INEP's site -- which can occur when INEP alters its site structure,
 for instance.
-(Should you detect this kind of occurrence, please contact this package's author,
-just in case he haven't noticed that yet.)
-If you do not want to seek any download page, then set \code{download.page.url} to "".
+(\emph{Should you detect this kind of occurrence, please contact this package's author,
+just in case he haven't noticed that yet.})
 If you want \code{download.page.url} back to its default value,
-then set \code{download.page.url} to \code{NULL}.}
+then set \code{download.page.url} to \code{NULL} or to \code{""}.\preformatted{Default Value: `"http://portal.inep.gov.br/web/guest/microdados"`
+}}
 
 \item{temp.path}{where should the microdata ZIP files be downloaded and decompressed?
-It cannot be set "" and, if attempted, it is set to its default value "./temp".}
+It cannot be set "" and, if attempted, it is set to its default value "./temp".\preformatted{Default value: `"./temp"`
+}}
 
-\item{keep.download}{whether to keep or purge the downloaded packed microdata files}
+\item{keep.download}{whether to keep or purge the downloaded packed microdata files\preformatted{Default value: `FALSE`
+}}
 
 \item{verbose}{do you want know what is going on under the hood while these functions
-are running? (currently, not implemented)}
+are running?\preformatted{ Default value: `FALSE`
+}}
 }
 \description{
 Options for package \code{inepdata}
