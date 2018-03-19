@@ -11,6 +11,7 @@ Options(..., zip.path, download.page.url, temp.path, keep.download, verbose)
 
 \item{zip.path}{path to directory where the downloaded zip files are located,
 so that those zip files will not be downloaded if available locally.
+\strong{Important}: the filenames must be equal to the corresponding file in INEP site.
 If you are not going to work with already downloaded ZIP files,
 then set \code{zip.path} to "".}
 
