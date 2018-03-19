@@ -10,7 +10,8 @@ default.temp.path  <- "./temp"
 .options$download.page.url <- default.download.page.url
 .options$temp.path  <- default.temp.path
 .options$keep.download <- FALSE
-.options$verbose <- FALSE
+# .options$verbose <- FALSE  # production version
+.options$verbose <- TRUE  # development version
 
 # # maybe in version 2.0 I will introduce parallel processing, but not today
 # default.max.paralell.downloads <- parallel::detectCores() - 1

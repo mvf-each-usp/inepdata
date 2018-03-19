@@ -27,7 +27,9 @@ load.programs <- function() {
         Verbose("scraping ZIP links")
         remote.zip.files <-
             dplyr::data_frame(
-                location = xml2::read_html(.options$download.page.url) %>%
+                location =
+                    url(.options$download.page.url) %>%
+                    xml2::read_html(verbose = .options$Verbose) %>%
                     rvest::html_nodes("a") %>%
                     rvest::html_attr("href") %>%
                     stringr::str_subset("\\.zip") %>%
