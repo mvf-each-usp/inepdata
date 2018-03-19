@@ -72,21 +72,22 @@ load.programs <- function() {
                 stringr::str_replace("[A-Za-z_]*([0-9]{4}).*", "\\1"),
             program = filename %>%
                 stringr::str_replace("([A-Za-z_]*)_?[0-9]{4}.*", "\\1") %>%
-                # stringr::str_replace("micro(dados)?_?(.*)", "\\2") %>%
-                # stringr::str_replace("(.*)_", "\\1") %>%
-                # pegando os programas específicos
-                stringr::str_replace(".*(superior).*", "censup") %>%
-                stringr::str_replace(".*(cpm).*", "cpm") %>%
-                stringr::str_replace(".*(censo).*(escolar).*", "censo_escolar") %>%
-                stringr::str_replace(".*(enade).*", "enade") %>%
-                stringr::str_replace(".*(enem|ENEM).*", "enem") %>%
-                stringr::str_replace(".*(discriminat).*", "padae") %>%
-                stringr::str_replace(".*(pnera).*", "pnera") %>%
-                stringr::str_replace(".*(saeb|aneb).*", "aneb") %>%
-                stringr::str_replace(".*(prova).*(brasil).*", "anresc") %>%
-                stringr::str_replace(".*(provao).*", "enc") %>%
-                stringr::str_replace(".*(ana).*", "ana") %>%
-                stringr::str_replace(".*(idd).*", "idd") %>%
+                stringr::str_replace_all(
+                    c(
+                        ".*(superior).*" = "censup",
+                        ".*(cpm).*" = "cpm",
+                        ".*(censo).*(escolar).*" = "censo_escolar",
+                        ".*(enade).*" = "enade",
+                        ".*(enem|ENEM).*" = "enem",
+                        ".*(discriminat).*" = "padae",
+                        ".*(pnera).*" = "pnera",
+                        ".*(saeb|aneb).*" = "aneb",
+                        ".*(prova).*(brasil).*" = "anresc",
+                        ".*(provao).*" = "enc",
+                        ".*(ana).*" = "ana",
+                        ".*(idd).*" = "idd"
+                    )
+                ) %>%
                 factor(levels = levels(available.programs$program))
         ) %>%
         dplyr::arrange(program, year, is.url) %>%
