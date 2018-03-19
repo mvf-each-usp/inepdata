@@ -67,7 +67,7 @@ load.programs <- function() {
     zip.files %<>%
         dplyr::mutate(
             filename = location %>%
-                stringr::str_replace(".*/([^/]*)\\.zip.*$", "\\1"),
+                stringr::str_replace(".*/([^/]*)\\.zip$", "\\1"),
             year = filename %>%
                 stringr::str_replace("[A-Za-z_]*([0-9]{4}).*", "\\1"),
             program = filename %>%
