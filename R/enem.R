@@ -2,8 +2,10 @@
 #'
 #' Downloads, unpacks, imports, organizes and formats microdata from ENEM editions
 #'
-#' @param years years to get from INEP site or from the directory informed in `zip.files.path` below;
-#'     it should be a vector of either integers or strings
+#' @param years years to get from INEP site informed in `download.page.url` or
+#'     from the directory informed in `zip.path`, both parameters of
+#'     [Options()] function.
+#'     It should be a vector of either integers or strings.
 #'
 #' @return
 #' A list of lists, indexed by the years present in `year` that could be processed.

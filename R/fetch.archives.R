@@ -3,6 +3,7 @@
 # @param program any value in `available.programs$program`
 # @param years any set of values in `available.programs$years[[program]]`
 #
+# @return list of list of data about the ZIP files
 # @md
 #
 # @examples
