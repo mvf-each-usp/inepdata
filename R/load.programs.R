@@ -74,32 +74,18 @@ load.programs <- function() {
                 stringr::str_replace("([A-Za-z_]*)_?[0-9]{4}.*", "\\1") %>%
                 stringr::str_replace(
                     c(
-                        ".*(superior).*",
-                        ".*(cpm).*",
-                        ".*(censo).*(escolar).*",
-                        ".*(enade).*",
-                        ".*(enem|ENEM).*",
-                        ".*(discriminat).*",
-                        ".*(pnera).*",
-                        ".*(saeb|aneb).*",
-                        ".*(prova).*(brasil).*",
-                        ".*(provao).*",
-                        ".*(ana).*",
-                        ".*(idd).*"
-                    ),
-                    c(
-                        "censup",
-                        "cpm",
-                        "censo_escolar",
-                        "enade",
-                        "enem",
-                        "padae",
-                        "pnera",
-                        "aneb",
-                        "anresc",
-                        "enc",
-                        "ana",
-                        "idd"
+                        ".*(superior).*" = "censup",
+                        ".*(cpm).*" = "cpm",
+                        ".*(censo).*(escolar).*" = "censo_escolar",
+                        ".*(enade).*" = "enade",
+                        ".*(enem|ENEM).*" = "enem",
+                        ".*(discriminat).*" = "padae",
+                        ".*(pnera).*" = "pnera",
+                        ".*(saeb|aneb).*" = "aneb",
+                        ".*(prova).*(brasil).*" = "anresc",
+                        ".*(provao).*" = "enc",
+                        ".*(ana).*" = "ana",
+                        ".*(idd).*" = "idd"
                     )
                 ) %>%
                 factor(levels = levels(available.programs$program))
