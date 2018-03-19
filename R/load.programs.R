@@ -86,10 +86,8 @@ load.programs <- function() {
                 stringr::str_replace(".*(idd).*", "idd") %>%
                 factor(levels = levels(available.programs$program))
         ) %>%
+        dplyr::arrange(program, year, is.url) %>%
         dplyr::group_by(program, year) %>%
-        # years with microdata already downloaded will show up here in the form of
-        #   duplicated lines: the first with `is.url == F` and the second with `is.url == T`
-        # TODO: test whether this muthafucka actually works or not
         dplyr::filter(row_number() == 1) %>%
         dplyr::ungroup()
     Verbose("programs loaded")
