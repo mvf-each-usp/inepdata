@@ -25,10 +25,11 @@ load.programs <- function() {
     if (.options$download.page.url != "") {
         check.internet()
         Verbose("scraping ZIP links")
+        download.page <- url(.options$download.page.url)
         remote.zip.files <-
             dplyr::data_frame(
                 location =
-                    url(.options$download.page.url) %>%
+                    download.page %>%
                     xml2::read_html(verbose = .options$Verbose) %>%
                     rvest::html_nodes("a") %>%
                     rvest::html_attr("href") %>%
@@ -44,6 +45,7 @@ load.programs <- function() {
                             as.integer(httr::HEAD(loc)$headers$`content-length`)
                     )
             )
+        close(download.page)
     } else remote.zip.files <- null.zip.files
     # search for ZIP files locally in `zip.path` if any
     if (.options$zip.path != ""){
