@@ -44,17 +44,16 @@ fetch.archives <- function(Program, years){
             )
     }
     if (program.2b.fetched %>% dplyr::filter(!is.url) %>% dplyr::count() > 0) {
-        Verbose("copying local ZIP files")
+        Verbose("copying local ZIP files if necessary")
         copied.files <-
             program.2b.fetched %>%
             dplyr::filter(!is.url) %>%
             dplyr::mutate(
                 error =
-                    dplyr::if_else(
-                        location != filename,
-                        file.copy(location, filename) %>% as.numeric(),
+                    if (.options$zip.path == .options$temp.path)
                         0
-                    )
+                    else
+                        (file.copy(location, filename) %>% as.numeric())
             )
     }
     fetched <- rbind(downloaded.files, copied.files)
