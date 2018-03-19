@@ -48,8 +48,14 @@ fetch.archives <- function(Program, years){
         copied.files <-
             program.2b.fetched %>%
             dplyr::filter(!is.url) %>%
-            dplyr::filter(location != filename) %>%
-            dplyr::mutate(error = file.copy(location, filename) %>% as.numeric())
+            dplyr::mutate(
+                error =
+                    dplyr::if_else(
+                        location != filename,
+                        file.copy(location, filename) %>% as.numeric(),
+                        0
+                    )
+            )
     }
     fetched <- rbind(downloaded.files, copied.files)
     files.with.error <- fetched %>% dplyr::filter(error != 0)
