@@ -24,8 +24,10 @@ load.programs <- function() {
     # scrape ZIP links in INEP microdata page `download.page.url`
     if (.options$download.page.url != "") {
         check.internet()
-        Verbose("scraping ZIP links")
         download.page <- url(.options$download.page.url)
+        Verbose("opening connection to download page")
+        open(download.page, open = "rb")
+        Verbose("scraping ZIP links")
         remote.zip.files <-
             dplyr::data_frame(
                 location =
@@ -45,6 +47,7 @@ load.programs <- function() {
                             as.integer(httr::HEAD(loc)$headers$`content-length`)
                     )
             )
+        Verbose("closing connection to download page")
         close(download.page)
     } else remote.zip.files <- null.zip.files
     # search for ZIP files locally in `zip.path` if any
