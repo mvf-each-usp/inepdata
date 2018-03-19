@@ -2,6 +2,7 @@
 
 export(Options)
 export(available.programs)
+export(censup)
 export(enem)
 export(load.programs)
 importFrom(dplyr,row_number)
