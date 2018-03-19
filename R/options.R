@@ -23,6 +23,7 @@ default.temp.path  <- "./temp"
 #' @param ... these dots are here just to force parameters to be explicitly named
 #' @param zip.path path to directory where the downloaded zip files are located,
 #'     so that those zip files will not be downloaded if available locally.
+#'     **Important**: the filenames must be equal to the corresponding file in INEP site.
 #'     If you are not going to work with already downloaded ZIP files,
 #'     then set `zip.path` to "".
 #' @param download.page.url external HTML page from which the ZIP URLs will be scraped.
