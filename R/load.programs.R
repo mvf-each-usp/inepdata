@@ -72,7 +72,7 @@ load.programs <- function() {
                 stringr::str_replace("[A-Za-z_]*([0-9]{4}).*", "\\1"),
             program = filename %>%
                 stringr::str_replace("([A-Za-z_]*)_?[0-9]{4}.*", "\\1") %>%
-                stringr::str_replace(
+                stringr::str_replace_all(
                     c(
                         ".*(superior).*" = "censup",
                         ".*(cpm).*" = "cpm",
