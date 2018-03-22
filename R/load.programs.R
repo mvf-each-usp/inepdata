@@ -22,7 +22,7 @@ load.programs <- function() {
             stringsAsFactors = FALSE
         )
     # scrape ZIP links in INEP microdata page `download.page.url`
-    if (.options$download.page.url != "") {
+    if (!.options$offline) {
         check.internet()
         download.page <- url(.options$download.page.url)
         Verbose("opening connection to download page")

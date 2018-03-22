@@ -95,8 +95,12 @@ Options <- function(..., zip.path, offline, download.page.url, temp.path,
     if (!identical(list(),list(...)))
         stop("Could not handle option(s): ", paste0(names(list(...)), collapse = ", "))
     if (
-        missing(zip.path) && missing(download.page.url) && missing(temp.path) &&
-        missing(keep.download) && missing(verbose)
+        missing(zip.path) && 
+        missing(offline) && 
+        missing(download.page.url) && 
+        missing(temp.path) &&
+        missing(keep.download) && 
+        missing(verbose)
     ) {
         return(as.list(.options))
     }
@@ -212,8 +216,8 @@ Options <- function(..., zip.path, offline, download.page.url, temp.path,
     #         .options$mean.wait <- mean.wait
     #     }
     # }
-    Verbose("parsing `keep.download`")
     if (!missing(keep.download)){
+        Verbose("parsing `keep.download`")
         if (!is.logical(keep.download))
             stop("Parameter `keep.download` must be logical.")
         if (length(keep.download) > 1)
@@ -221,6 +225,7 @@ Options <- function(..., zip.path, offline, download.page.url, temp.path,
         .options$keep.download <- keep.download
     }
     if (!missing(verbose)){
+        Verbose("parsing `verbose`")
         if (!is.logical(verbose))
             stop("Parameter `verbose` must be logical.")
         if (length(verbose) > 1)
