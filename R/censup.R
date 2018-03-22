@@ -57,4 +57,6 @@ censup <- function(years){
     Verbose("Organizing microdata")
     organized <- organize(formated)
     # TODO: after all is running smooth, change it to a pipe
+    # TODO: remove extracted files
+    # TODO: remove ZIP files if `keep.download` is FALSE
 }

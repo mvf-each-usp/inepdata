@@ -7,8 +7,17 @@
 #
 decompress <- function(fetched) {
     # assumption checking
-    if (!identical(names(fetched), c())) {
-
-    }
+        # TODO
     # back to work
+    # TODO: include Verbose() messages
+    fetched %>%
+        dplyr::mutate(
+            unzipped.where =
+                normalizePath(inepdata:::.options$temp.path) %+% "/" %+% program %+% "/" %+% year,
+            create.dir.ok = sapply(unzipped.where, dir.create, recursive = T, showWarnings = F)
+        ) %>%
+        dplyr::mutate(
+            extracted =
+                purrr::map2(filename, unzipped.where, ~ unzip(zipfile = .x, exdir = .y))
+        )
 }
