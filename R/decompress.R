@@ -2,7 +2,7 @@
 #
 # @param fetched list of data about the ZIP files
 #
-# @return list of data about the files extracted from the ZIP files
+# @return tibble with aditional info about the files extracted from the ZIP files
 # @md
 #
 decompress <- function(fetched) {
