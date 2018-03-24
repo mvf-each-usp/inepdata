@@ -39,7 +39,7 @@
 #' @importFrom magrittr "%<>%"
 #'
 enem <- function(years){
-    Verbose("Getting CenSup microdata")
+    Verbose("Getting ENEM microdata")
     fetched <- fetch.archives("enem", years)
     # TODO: extract ZIP files present in both `temp.path` and `years` each in a different subdir
     decompressed <- decompress(fetched)
