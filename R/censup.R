@@ -39,22 +39,17 @@
 #' @importFrom magrittr "%<>%"
 #'
 censup <- function(years){
-    Verbose("Fetching ZIP files")
+    Verbose("Getting CenSup microdata")
     fetched <- fetch.archives("censup", years)
     # TODO: extract ZIP files present in both `temp.path` and `years` each in a different subdir
-    Verbose("Decompressing ZIP files")
     decompressed <- decompress(fetched)
     # TODO: parse SPSS or SAS syntax to get column types right
-    Verbose("Parsing metadata from importation syntax")
     metadata <- parse.metadata(decompressed)
     # TODO: import data.frames with metadata parsed from syntax
-    Verbose("Importing microdata")
     imported <- import(decompressed, metadata)
     # TODO: format imported data.frames
-    Verbose("Formatting microdata")
     formatted <- format(imported)
     # TODO: organize formated data.frames
-    Verbose("Organizing microdata")
     organized <- organize(formated)
     # TODO: after all is running smooth, change it to a pipe
     # TODO: remove extracted files

@@ -6,6 +6,7 @@
 # @md
 #
 decompress <- function(fetched) {
+    Verbose("extracting ZIP files")
     # assumption checking
         # TODO
     # back to work

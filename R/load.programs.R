@@ -15,6 +15,7 @@
 #' @importFrom dplyr row_number
 #'
 load.programs <- function() {
+    Verbose("loading programs from INEP download and/or local disk")
     null.zip.files <-
         data.frame(
             location = as.character(NULL),

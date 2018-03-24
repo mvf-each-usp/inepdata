@@ -11,6 +11,7 @@
 available.programs <-
     (
         function() {
+            Verbose("assembling `available.programs`")
             programs <-
                 data.frame(
                     program =

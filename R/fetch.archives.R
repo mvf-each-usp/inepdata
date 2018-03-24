@@ -10,6 +10,7 @@
 # fetch.archives("enem", 2000)
 # fetch.archives("enade", 2005:2008)
 fetch.archives <- function(Program, years){
+    Verbose("Fetching ZIP files")
     # assumption checking
     if (!Program %in% inepdata::available.programs$program)
         stop("Parameter 'program' must be one of 'available.programs$program' possibilities.")

@@ -92,14 +92,15 @@ default.verbose <- FALSE
 Options <- function(..., zip.path, offline, download.page.url, temp.path,
                     # max.paralell.downloads, mean.wait,
                     keep.download, verbose) {
+    Verbose("parsing `Option()` parameters")
     if (!identical(list(),list(...)))
         stop("Could not handle option(s): ", paste0(names(list(...)), collapse = ", "))
     if (
-        missing(zip.path) && 
-        missing(offline) && 
-        missing(download.page.url) && 
+        missing(zip.path) &&
+        missing(offline) &&
+        missing(download.page.url) &&
         missing(temp.path) &&
-        missing(keep.download) && 
+        missing(keep.download) &&
         missing(verbose)
     ) {
         return(as.list(.options))
