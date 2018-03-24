@@ -121,6 +121,7 @@ Options <- function(..., zip.path, offline, download.page.url, temp.path,
                 stop("No ZIP file found in directories given in `zip.path`.")
         }
         .options$zip.path <- zip.path
+        Verbose("zip.path == ", zip.path)
     }
     if (!missing(offline)) {
         Verbose("parsing `offline`")
@@ -131,6 +132,7 @@ Options <- function(..., zip.path, offline, download.page.url, temp.path,
         if (length(offline) > 1)
             stop("Length of parameter `offline` must be 1.")
         .options$offline <- offline
+        Verbose("offline == ", offline)
         if (offline == TRUE) {
             if (.options$zip.path == "") # zip.path já foi processado
                 warning(
@@ -171,6 +173,7 @@ Options <- function(..., zip.path, offline, download.page.url, temp.path,
         )
             stop("No ZIP file links were found on URL given in `download.page.url`.")
         .options$download.page.url <- download.page.url
+        Verbose("download.page.url == ", download.page.url)
     }
     if (!missing(download.page.url) || !missing(zip.path)) {
         Verbose("loading programs again")
@@ -187,6 +190,7 @@ Options <- function(..., zip.path, offline, download.page.url, temp.path,
             if (!dir.exists(temp.path))
                 dir.create(temp.path)
             .options$temp.path <- temp.path
+            Verbose("temp.path == ", temp.path)
         } else {
             warning("Parameter `` cannot be \"\". Coerced to \"./temp\".")
         }
@@ -224,6 +228,7 @@ Options <- function(..., zip.path, offline, download.page.url, temp.path,
         if (length(keep.download) > 1)
             stop("Length of parameter `keep.download` must be 1.")
         .options$keep.download <- keep.download
+        Verbose("keep.download == ", keep.download)
     }
     if (!missing(verbose)){
         Verbose("parsing `verbose`")
@@ -232,5 +237,6 @@ Options <- function(..., zip.path, offline, download.page.url, temp.path,
         if (length(verbose) > 1)
             stop("Length of parameter `verbose` must be 1.")
         .options$verbose <- verbose
+        Verbose("verbose == ", verbose)
     }
 }
